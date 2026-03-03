@@ -133,6 +133,17 @@ const RegisterForm: React.FC = () => {
     }
   };
 
+  // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { name, files } = e.target;
+  //   if (files?.[0]) {
+  //     setFormData((prev) => ({
+  //       ...prev,
+  //       [name]: files[0],
+  //     }));
+  //   }
+  // };
+
+
 const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   const { name, files } = e.target;
 
@@ -152,6 +163,8 @@ const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     [name]: file,
   }));
 };
+
+
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
