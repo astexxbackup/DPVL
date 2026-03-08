@@ -21,20 +21,13 @@ import LeagueInfoSection from "@/components/Leagueinfo";
 // --- CONFIGURATION FOR STATIC BANNERS ---
 // You can easily change images and text here
 const STATIC_SLIDES = [
-  {
-    id: "static-5",
-    desktopImg: "/assets/banner/4.png",
-    mobileImg: "/assets/banner/mobile5.png",
-    position: "center",
-    
-  },
-  {
-    id: "static-1",
-    desktopImg: "/assets/banner/1.png",
-    mobileImg: "/assets/banner/mobile1.png",
-    position: "center", // Options: 'center' | 'bottom'
-    
-  },
+  // {
+  //   id: "static-5",
+  //   desktopImg: "/assets/banner/4.png",
+  //   mobileImg: "/assets/banner/mobile5.png",
+  //   position: "center",
+  // },
+  
   {
     id: "static-2",
     desktopImg: "/assets/banner/2.png",
@@ -54,6 +47,13 @@ const STATIC_SLIDES = [
     desktopImg: "/assets/banner/5.png",
     mobileImg: "/assets/banner/mobile4.png",
     position: "bottom",
+    
+  },
+  {
+    id: "static-1",
+    desktopImg: "/assets/banner/1.png",
+    mobileImg: "/assets/banner/mobile1.png",
+    position: "center", // Options: 'center' | 'bottom'
     
   },
   
