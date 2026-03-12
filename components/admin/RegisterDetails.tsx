@@ -17,7 +17,9 @@ import {
   FileText,
   Phone,
   ArrowRight,
+  FileSpreadsheet,
 } from "lucide-react";
+import * as XLSX from "xlsx";
 
 const TABS = [
   { id: "pending", label: "Registration Requests" },
@@ -124,6 +126,70 @@ export default function CandidateDashboard() {
     } finally {
       setIsDeleting(false);
     }
+  };
+
+  const handleDownloadExcel = () => {
+    // Filter only accepted candidates for the current filtered data
+    const verifiedCandidates = filteredData.filter(u => (u.status || "pending") === "accepted");
+    
+    if (verifiedCandidates.length === 0) {
+      alert("No verified candidates found to download.");
+      return;
+    }
+
+    const excelData = verifiedCandidates.map((u) => ({
+      "Full Name": `${u.firstName || ""} ${u.lastName || ""}`.trim(),
+      "Date of Birth": u.dob ? new Date(u.dob).toLocaleDateString() : "N/A",
+      "Age": u.age || "N/A",
+      "Height": u.height || "N/A",
+      "Leading Hand": u.leadingHand || "N/A",
+      "Playing Positions": u.playingPosition?.join(", ") || "N/A",
+      "Experience": u.experience || "N/A",
+      "Leagues Played": u.leaguesPlayed || "N/A",
+      "Achievements": u.achievements || "N/A",
+      "Dept Representation": u.departmentRepresentation || "N/A",
+      "Dept Name": u.departmentName || "N/A",
+      "Injury History": u.injuryHistory || "N/A",
+      "Injury Specification": u.injurySpecification || "N/A",
+      "Phone Number": u.phone || "N/A",
+      "WhatsApp Number": u.whatsappNumber || "N/A",
+      "Email ID": u.email || "N/A",
+      "Aadhar Number": u.aadharNumber || "N/A",
+      "Complete Address": u.address || "N/A",
+      "District": u.district || "N/A",
+      "State": u.state || "N/A",
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(excelData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Verified Candidates");
+
+    // Set column widths for better formatting
+    const wscols = [
+      { wch: 25 }, // Full Name
+      { wch: 15 }, // DOB
+      { wch: 10 }, // Age
+      { wch: 10 }, // Height
+      { wch: 15 }, // Leading Hand
+      { wch: 30 }, // Playing Positions
+      { wch: 20 }, // Experience
+      { wch: 30 }, // Leagues Played
+      { wch: 30 }, // Achievements
+      { wch: 20 }, // Dept Representation
+      { wch: 20 }, // Dept Name
+      { wch: 20 }, // Injury History
+      { wch: 30 }, // Injury Specification
+      { wch: 15 }, // Phone Number
+      { wch: 15 }, // WhatsApp Number
+      { wch: 25 }, // Email ID
+      { wch: 20 }, // Aadhar Number
+      { wch: 40 }, // Address
+      { wch: 20 }, // District
+      { wch: 20 }, // State
+    ];
+    worksheet["!cols"] = wscols;
+
+    XLSX.writeFile(workbook, `Verified_Candidates_${new Date().toISOString().split('T')[0]}.xlsx`);
   };
 
   const filteredData = users.filter((u) => {
@@ -273,6 +339,7 @@ export default function CandidateDashboard() {
           onDeleteCandidate={setDeleteConfirmId}
           setSelectedCandidate={setSelectedCandidate}
           activeTab={activeTab}
+          onDownload={handleDownloadExcel}
         />
       )}
 
@@ -290,6 +357,7 @@ function TableLayout({
   onDeleteCandidate,
   setSelectedCandidate,
   activeTab,
+  onDownload,
 }: {
   data: any[];
   loading: boolean;
@@ -299,12 +367,13 @@ function TableLayout({
   onDeleteCandidate: (id: string) => void;
   setSelectedCandidate: (candidate: any) => void;
   activeTab: string;
+  onDownload: () => void;
 }) {
   return (
     <>
       <div className="bg-white border border-gray-200 rounded-lg shadow-sm mb-6 overflow-hidden flex flex-col max-h-[calc(100vh-250px)]">
         <div className="p-4 flex flex-col md:flex-row gap-4 items-center justify-between bg-white z-10 border-b border-gray-100">
-          <div className="relative w-full">
+          <div className="flex-1 relative w-full">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
             <input
               type="text"
@@ -314,6 +383,15 @@ function TableLayout({
               className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500 text-sm"
             />
           </div>
+          {activeTab === "accepted" && (
+            <button
+              onClick={onDownload}
+              className="flex items-center gap-2 px-4 py-2.5 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all font-bold text-sm shadow-sm"
+            >
+              <FileSpreadsheet className="w-4 h-4" />
+              Download Excel
+            </button>
+          )}
         </div>
 
         <div className="flex-1 overflow-auto min-h-[400px]">
