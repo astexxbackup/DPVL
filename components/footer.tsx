@@ -151,10 +151,13 @@ export default function Footer() {
         <div className="w-full h-0.5 bg-[#D35CA7] my-6" />
 
         <div className="flex flex-col items-center justify-center gap-2 text-xs md:text-sm font-light text-white/80">
-          <span className="text-[15px]">Copyright 2026 Velvet Aces, All Rights Reserved.</span>
+          <span className="text-[15px]">Copyright 2026 Velvet Aces Productions Private Limited, All Rights Reserved.</span>
           <div className="flex gap-4 md:gap-4">
             <Link href="/terms-and-condition" target="_blank" className="hover:text-white hover:underline transition-all">
                Terms and Conditions
+            </Link>
+            <Link href="/privacy-policy" target="_blank" className="hover:text-white hover:underline transition-all">
+               Privacy Policy
             </Link>
           </div>
         </div>
