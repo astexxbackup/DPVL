@@ -111,10 +111,10 @@ export default function RefundPolicy() {
               </h2>
               <p className="mb-2 text-lg text-justify">For refund or cancellation-related queries, contact us at:</p>
               <a 
-                href="mailto:info@delhiprovolleyball.com" 
+                href="mailto:founder@delhiprovolleyballleague.com" 
                 className="text-[#3b3bb7] font-bold text-xl hover:underline"
               >
-                info@delhiprovolleyball.com
+                founder@delhiprovolleyballleague.com
               </a>
             </section>
           </div>
